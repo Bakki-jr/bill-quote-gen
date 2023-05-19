@@ -136,14 +136,14 @@ export default function Home() {
                   <input
                     key={info.flavour + index}
                     {...register(`isFlavourSelected-${info.flavour}`)}
-                    id="green-checkbox"
+                    id={`flavour-checkbox-${index}`}
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded"
                   />
                   <label
-                    htmlFor="green-checkbox"
-                    className="ml-2 text-sm font-medium text-gray-900"
+                    htmlFor={`flavour-checkbox-${index}`}
+                    className="ml-2 text-sm font-bold text-gray-900"
                   >
                     {info.flavour}
                   </label>
