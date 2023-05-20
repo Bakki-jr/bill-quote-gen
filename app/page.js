@@ -48,7 +48,7 @@ export default function Home() {
   ];
 
   const [calcuatedOutput, setCalcuatedOutput] = useState("");
-  const [cakeQuantity, setCakeQuantity] = useState("");
+  const [outputTextContent, setOutputTextContent] = useState("");
 
   const onSubmit = (data) => {
     const flavourDetails = [];
@@ -70,13 +70,18 @@ export default function Home() {
     );
     console.log(selectedFlavours, "selectedFlavours");
     calcuateCostPerFlavour(selectedFlavours, data);
+    getOutputTextContent(data);
+    setTimeout((_) => {
+      document.getElementById("quote-form-submit").scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 100);
   };
 
   const calcuateCostPerFlavour = (flavours, inputsForPriceCalc) => {
     const noveltyCost = Number(inputsForPriceCalc.novelty) || 0;
     const egglessPrice = inputsForPriceCalc.isEggless ? 60 : 0;
     const cakeQuantity = Number(inputsForPriceCalc.quantity) || 0;
-    setCakeQuantity(cakeQuantity);
 
     console.log(`
       noveltyCost: ₹${noveltyCost}
@@ -94,6 +99,20 @@ export default function Home() {
 
     console.log(flavourWithCalcPrice.toString().replace(/,/g, "\n"));
     setCalcuatedOutput(flavourWithCalcPrice.toString().replace(/,/g, "\n"));
+  };
+
+  const getOutputTextContent = (data) => {
+    const cakeQty = Number(data.quantity) || 0;
+    const qty = `${cakeQty} ${cakeQty > 1 ? "kg's" : "kg"}`;
+    const cakeModelType = `${
+      data.cakeType ? `(${data.cakeType.toUpperCase()})` : ""
+    }`;
+    const category = `${data.isEggless ? `(${"eggless".toUpperCase()})` : ""}`;
+    setOutputTextContent(
+      `The selected model is possible in ${qty} Minimum ${cakeModelType}\n
+       Cost for the selected model for ${qty} ${category} \n 
+       \n`
+    );
   };
 
   const getFinalOutput = () => {
@@ -115,9 +134,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-2">
-      <div className="font-bold text-xl italic">
-        Pastry Chef Icecream flavour quote:
-      </div>
+      <div className="font-bold text-xl italic">Pastry Chef quotation:</div>
       <div className="w-full">
         <div className="flex justify-around items-center flex-wrap my-2">
           <div className="inline-flex items-center mr-2 min-w-[220px]">
@@ -143,14 +160,14 @@ export default function Home() {
                   />
                   <label
                     htmlFor={`flavour-checkbox-${index}`}
-                    className="ml-2 text-sm font-bold text-gray-900"
+                    className="ml-2 text-sm text-gray-900"
                   >
                     {info.flavour}
                   </label>
                 </div>
                 <input
                   key={`costPerKg-${index}`}
-                  className="w-[55px] text-end"
+                  className="w-[55px] text-end rounded-md"
                   {...register(`costPerKg-${info.flavour}`)}
                   type={"number"}
                   value={info.price}
@@ -159,16 +176,16 @@ export default function Home() {
               </div>
             );
           })}
-          <div className="flex justify-around items-center flex-wrap my-2">
+          <div className="flex justify-between items-center flex-wrap my-2">
             <input
-              className="rounded-md w-[100px]"
+              className="rounded-md w-[125px] mx-1 my-2"
               {...register("quantity")}
               type={"number"}
               step={0.5}
               placeholder={"Quantity"}
             />
             <input
-              className="rounded-md w-[100px]"
+              className="rounded-md w-[125px] mx-1 my-2"
               {...register("novelty")}
               placeholder={"Novelty"}
               type={"number"}
@@ -187,8 +204,16 @@ export default function Home() {
                 ></div>
               </label>
             </div>
+            <select className="rounded-md mx-1 my-2" {...register("cakeType")}>
+              <option value="">--choose an option--</option>
+              <option value="Fondant Cake">Fondant Cake</option>
+              <option value="Semi Fondant Cake">Semi Fondant Cake</option>
+              <option value="Photo Cake">Photo Cake</option>
+            </select>
           </div>
+
           <input
+            id="quote-form-submit"
             className="w-full bg-emerald-500 py-2 mt-2 rounded-xl"
             type="submit"
           />
@@ -197,7 +222,7 @@ export default function Home() {
           <div className="w-full p-3 bg-white rounded-xl my-6">
             <div className="share-wrapper">
               <WhatsappShareButton
-                title={`Cost of ${cakeQuantity} ${cakeQuantity > 1 ? "kg's" : "kg"} cake for the selected model: \n`}
+                title={outputTextContent}
                 url={calcuatedOutput}
               >
                 <WhatsappIcon size={30} round={true} />
@@ -220,10 +245,7 @@ export default function Home() {
               </svg>
             </div>
             <div className="result-data">
-              <div id="result-title">
-                Cost of {cakeQuantity} {cakeQuantity > 1 ? "kg's" : "kg"} cake
-                for the selected model:
-              </div>
+              <div id="result-title">{outputTextContent}</div>
               <div id="result-output">{calcuatedOutput}</div>
             </div>
           </div>
