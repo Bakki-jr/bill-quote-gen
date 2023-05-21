@@ -11,40 +11,40 @@ export default function Home() {
     { flavour: "Butterscotch", price: "850" },
     { flavour: "Pineapple", price: "850" },
     { flavour: "Strawberry", price: "850" },
-    { flavour: "Mango Alphonso", price: "850" },
-    { flavour: "Black Forest", price: "920" },
-    { flavour: "Chocochips", price: "920" },
-    { flavour: "Milky Badam", price: "900" },
-    { flavour: "Milky Butterscotch", price: "900" },
-    { flavour: "Honey Almonds", price: "900" },
-    { flavour: "Pineapple Gateau", price: "900" },
-    { flavour: "Caramel Nuts", price: "900" },
-    { flavour: "White Forest (Orange Flavor)", price: "950" },
+    { flavour: "Mango Filling", price: "850" },
+    { flavour: "Milky Badam", price: "950" },
+    { flavour: "Milky Butterscotch", price: "950" },
+    { flavour: "Honey Almonds", price: "950" },
+    { flavour: "Pineapple Gateau", price: "950" },
+    { flavour: "Caramel Nuts", price: "950" },
+    { flavour: "Blackcurrant", price: "950" },
+    { flavour: "Snow Chocolate", price: "950" },
     { flavour: "Lychee Strawberry", price: "950" },
-    { flavour: "Blackcurrant", price: "880" },
-    { flavour: "Vancho", price: "980" },
-    { flavour: "Fruit and Nuts", price: "1030" },
-    { flavour: "Fruits Overload", price: "1030" },
-    { flavour: "Blueberry", price: "980" },
+    { flavour: "Black Forest", price: "980" },
+    { flavour: "Chocochips", price: "980" },
+    { flavour: "Vancho", price: "1000" },
+    { flavour: "Fruit and Nuts", price: "1050" },
+    { flavour: "Fruits Overload", price: "1050" },
+    { flavour: "Blueberry", price: "1050" },
     { flavour: "White Truffle", price: "1050" },
-    { flavour: "Choco Fantasy", price: "960" },
-    { flavour: "Choco Vanilla", price: "960" },
-    { flavour: "Brown Chocolate", price: "960" },
-    { flavour: "Red Velvet", price: "1150" },
-    { flavour: "German Blackforest", price: "980" },
-    { flavour: "Chocolate Truffle", price: "1050" },
-    { flavour: "Chocolate Symphony", price: "1150" },
-    { flavour: "Oreo Mocha", price: "1200" },
-    { flavour: "Chocolate Hazelnut", price: "1200" },
-    { flavour: "Chocolate Five Star", price: "1200" },
-    { flavour: "Choco KitKat", price: "1200" },
-    { flavour: "Choco Crunch", price: "1200" },
-    { flavour: "Chocolate Mousse", price: "1200" },
-    { flavour: "Belgium Chocolate", price: "1400" },
-    { flavour: "Italian Chocolate", price: "1300" },
-    { flavour: "Rasmalai Cake", price: "1300" },
-    { flavour: "Gulabjamun Cake", price: "1300" },
-    { flavour: "Kaju Katli Cake", price: "1400" },
+    { flavour: "Brown Chocolate", price: "1100" },
+    { flavour: "Choco Fantasy", price: "1100" },
+    { flavour: "Choco Vanilla", price: "1100" },
+    { flavour: "Red Velvet", price: "1250" },
+    { flavour: "German Blackforest", price: "1200" },
+    { flavour: "Chocolate Truffle", price: "1150" },
+    { flavour: "Chocolate Symphony", price: "1250" },
+    { flavour: "Oreo Mocha", price: "1300" },
+    { flavour: "Chocolate Hazelnut", price: "1300" },
+    { flavour: "Chocolate Five Star", price: "1300" },
+    { flavour: "Choco KitKat", price: "1400" },
+    { flavour: "Choco Crunch", price: "1400" },
+    { flavour: "Chocolate Mousse", price: "1400" },
+    { flavour: "Belgium Chocolate", price: "1500" },
+    { flavour: "Italian Chocolate", price: "1500" },
+    { flavour: "Rasmalai Cake", price: "1500" },
+    { flavour: "Gulabjamun Cake", price: "1500" },
+    { flavour: "Kaju Katli Cake", price: "1550" },
   ];
 
   const [calcuatedOutput, setCalcuatedOutput] = useState("");
@@ -90,7 +90,7 @@ export default function Home() {
     `);
 
     const flavourWithCalcPrice = flavours.map((item) => {
-      return `${item.flavour}: ₹ ${
+      return `${item.flavour}: ${
         cakeQuantity * Number(item.costPerKg) +
         noveltyCost +
         cakeQuantity * egglessPrice
@@ -109,9 +109,7 @@ export default function Home() {
     }`;
     const category = `${data.isEggless ? `(${"eggless".toUpperCase()})` : ""}`;
     setOutputTextContent(
-      `The selected model is possible in ${qty} Minimum ${cakeModelType}\n
-       Cost for the selected model for ${qty} ${category} \n 
-       \n`
+      `The selected model is possible in ${qty} Minimum ${cakeModelType} \n \nCost for the selected model for ${qty} ${category} \n \n \n`
     );
   };
 
@@ -125,7 +123,7 @@ export default function Home() {
   const copyToClipboard = async () => {
     const { info, calcPrice } = getFinalOutput();
     try {
-      await navigator.clipboard.writeText(info + "\n" + calcPrice);
+      await navigator.clipboard.writeText(info + calcPrice);
       console.log("Content copied to clipboard");
     } catch (err) {
       console.error("Failed to copy: ", err);
@@ -222,8 +220,8 @@ export default function Home() {
           <div className="w-full p-3 bg-white rounded-xl my-6">
             <div className="share-wrapper">
               <WhatsappShareButton
-                title={outputTextContent}
-                url={calcuatedOutput}
+                title=""
+                url={outputTextContent + calcuatedOutput}
               >
                 <WhatsappIcon size={30} round={true} />
               </WhatsappShareButton>
