@@ -47,8 +47,10 @@ export default function Home() {
     { flavour: "Kaju Katli Cake", price: "1550" },
   ];
 
+  const egglessText = `\n \nNote : EGGLESS Cake costs an extra ₹60/- per Kg.`;
   const [calcuatedOutput, setCalcuatedOutput] = useState("");
   const [outputTextContent, setOutputTextContent] = useState("");
+  const [isEgglessSelected, setIsEgglessSelected] = useState(false);
 
   const onSubmit = (data) => {
     const flavourDetails = [];
@@ -111,6 +113,7 @@ export default function Home() {
     setOutputTextContent(
       `The selected model is possible in ${qty} Minimum ${cakeModelType} \n \nCost for the selected model for ${qty} ${category} \n \n \n`
     );
+    setIsEgglessSelected(data.isEggless);
   };
 
   const getFinalOutput = () => {
@@ -210,18 +213,24 @@ export default function Home() {
             </select>
           </div>
 
-          <input
+          <button
             id="quote-form-submit"
             className="w-full bg-emerald-500 py-2 mt-2 rounded-xl"
             type="submit"
-          />
+          >
+            Submit
+          </button>
         </form>
         {calcuatedOutput.length > 0 ? (
           <div className="w-full p-3 bg-white rounded-xl my-6">
             <div className="share-wrapper">
               <WhatsappShareButton
                 title=""
-                url={outputTextContent + calcuatedOutput}
+                url={
+                  !isEgglessSelected
+                    ? outputTextContent + calcuatedOutput + egglessText
+                    : outputTextContent + calcuatedOutput
+                }
               >
                 <WhatsappIcon size={30} round={true} />
               </WhatsappShareButton>
@@ -244,7 +253,9 @@ export default function Home() {
             </div>
             <div className="result-data">
               <div id="result-title">{outputTextContent}</div>
-              <div id="result-output">{calcuatedOutput}</div>
+              <div id="result-output">
+                {calcuatedOutput} {!isEgglessSelected && egglessText}
+              </div>
             </div>
           </div>
         ) : null}
