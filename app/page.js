@@ -210,6 +210,7 @@ export default function Home() {
               <option value="Fondant Cake">Fondant Cake</option>
               <option value="Semi Fondant Cake">Semi Fondant Cake</option>
               <option value="Photo Cake">Photo Cake</option>
+              <option value="Pinata Cake">Pinata Cake</option>
             </select>
           </div>
 
