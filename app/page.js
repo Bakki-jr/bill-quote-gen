@@ -47,7 +47,8 @@ export default function Home() {
     { flavour: "Kaju Katli Cake", price: "1550" },
   ];
 
-  const egglessText = `\n \nNote : \n 1. EGGLESS Cake costs an extra ₹60/- per Kg. \n 2. Home Delivery service is available and chargeable based on the distance.`;
+  const egglessTextWithHomeDeliveryText = `\n \nNote : \n 1. EGGLESS Cake costs an extra ₹60/- per Kg. \n 2. Home Delivery service is available and chargeable based on the distance.`;
+  const homeDeliveryText = `\n \nNote : \n Home Delivery service is available and chargeable based on the distance.`;
   const [calcuatedOutput, setCalcuatedOutput] = useState("");
   const [outputTextContent, setOutputTextContent] = useState("");
   const [isEgglessSelected, setIsEgglessSelected] = useState(false);
@@ -229,8 +230,8 @@ export default function Home() {
                 title=""
                 url={
                   !isEgglessSelected
-                    ? outputTextContent + calcuatedOutput + egglessText
-                    : outputTextContent + calcuatedOutput
+                    ? outputTextContent + calcuatedOutput + egglessTextWithHomeDeliveryText
+                    : outputTextContent + calcuatedOutput + homeDeliveryText
                 }
               >
                 <WhatsappIcon size={30} round={true} />
@@ -255,7 +256,7 @@ export default function Home() {
             <div className="result-data">
               <div id="result-title">{outputTextContent}</div>
               <div id="result-output">
-                {calcuatedOutput} {!isEgglessSelected && egglessText}
+                {calcuatedOutput} {!isEgglessSelected ? egglessTextWithHomeDeliveryText : homeDeliveryText}
               </div>
             </div>
           </div>
