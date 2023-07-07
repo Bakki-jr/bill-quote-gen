@@ -47,7 +47,7 @@ export default function Home() {
     { flavour: "Kaju Katli Cake", price: "1550" },
   ];
 
-  const egglessText = `\n \nNote : EGGLESS Cake costs an extra ₹60/- per Kg.`;
+  const egglessText = `\n \nNote : \n 1. EGGLESS Cake costs an extra ₹60/- per Kg. \n 2. Home Delivery service is available and chargeable based on the distance.`;
   const [calcuatedOutput, setCalcuatedOutput] = useState("");
   const [outputTextContent, setOutputTextContent] = useState("");
   const [isEgglessSelected, setIsEgglessSelected] = useState(false);
